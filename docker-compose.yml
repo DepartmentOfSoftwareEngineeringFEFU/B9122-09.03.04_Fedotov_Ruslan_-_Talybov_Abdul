@@ -1,3 +1,5 @@
+name: project-money
+
 services:
   db:
     image: mysql:8.0
@@ -19,6 +21,7 @@ services:
       retries: 20
 
   backend:
+    image: project-money-backend
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -56,6 +59,7 @@ services:
       - "8000:8000"
 
   frontend:
+    image: project-money-frontend
     build:
       context: ./PROJECT-MONEY/registration-form
       dockerfile: Dockerfile

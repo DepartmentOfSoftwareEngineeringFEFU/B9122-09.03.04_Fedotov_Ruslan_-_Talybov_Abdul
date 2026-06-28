@@ -11,6 +11,7 @@ from app.core.db import Base
 from app.models.asset import Asset  # noqa: F401
 from app.models.backtest_result import BacktestResult  # noqa: F401
 from app.models.bot_trade import BotTrade  # noqa: F401
+from app.models.bulk_trade import BulkTradeBatch, BulkTradeItem  # noqa: F401
 from app.models.candle import Candle  # noqa: F401
 from app.models.ml_model import MLModel  # noqa: F401
 from app.models.model_forecast import ModelForecast  # noqa: F401
