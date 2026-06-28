@@ -1,0 +1,31 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Виртуальное окружение
+venv/
+.venv/
+env/
+
+# Секреты и конфиги
+.env
+.env.local
+*.env
+
+# IDE
+.idea/
+.vscode/
+
+# SSL сертификаты
+*.pem
+*.crt
+*.key
+mkcert.exe
+ngrok.exe
+
+# Логи и БД
+*.log
+*.sqlite3
+*.db

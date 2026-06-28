@@ -1,0 +1,544 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --app-bg: #070707;
+  --panel-bg: #12110e;
+  --panel-soft: #18150f;
+  --panel-hover: #211d13;
+  --field-bg: #14130f;
+  --field-hover: #1c190f;
+  --line: rgba(250, 204, 21, 0.13);
+  --line-strong: rgba(250, 204, 21, 0.24);
+  --accent: #facc15;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: var(--app-bg);
+}
+
+body {
+  margin: 0;
+  color: #f4f4f5;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Единая геометрия: все элементы сайта с прямыми углами без скруглений. */
+.rounded-none,
+.rounded-sm,
+.rounded,
+.rounded-md,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl,
+.rounded-full,
+[class*="rounded-"],
+[class*="rounded-["] {
+  border-radius: 0 !important;
+}
+
+
+::selection {
+  background: rgba(250, 204, 21, 0.32);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #facc15;
+}
+
+.app-card {
+  background: linear-gradient(180deg, rgba(18, 17, 14, 0.98), rgba(13, 12, 10, 0.98));
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.26);
+}
+
+.app-muted-card {
+  background: linear-gradient(180deg, rgba(24, 21, 15, 0.94), rgba(17, 15, 12, 0.94));
+  border: 1px solid var(--line);
+}
+
+.app-input {
+  background: var(--field-bg);
+  border: 1px solid var(--line);
+  color: #fafafa;
+}
+
+.app-input::placeholder {
+  color: #78716c;
+}
+
+.app-input:hover {
+  background: var(--field-hover);
+  border-color: var(--line-strong);
+}
+
+.app-input:focus {
+  border-color: #facc15;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.12);
+}
+
+.app-primary-button {
+  background: #facc15;
+  color: #111111;
+  font-weight: 700;
+}
+
+.app-primary-button:hover:not(:disabled) {
+  background: #fde047;
+}
+
+.app-secondary-button {
+  background: #18181b;
+  color: #f4f4f5;
+  border: 1px solid #3f3f46;
+}
+
+.app-secondary-button:hover:not(:disabled) {
+  border-color: #facc15;
+  color: #facc15;
+}
+
+
+/* Единый теплый dark-surface вместо серо-синего tailwind gray/slate в карточках и полях. */
+.dark .bg-gray-700,
+.dark .bg-gray-800,
+.dark .bg-gray-700\/50,
+.dark .bg-gray-700\/30,
+.dark .dark\:bg-gray-700,
+.dark .dark\:bg-gray-700\/50,
+.dark .dark\:bg-gray-700\/30,
+.dark .dark\:bg-gray-800,
+.dark .dark\:bg-zinc-900,
+.dark .dark\:bg-zinc-900\/70,
+.dark .dark\:bg-\[\#111111\] {
+  background: linear-gradient(180deg, rgba(24, 21, 15, 0.96), rgba(17, 15, 12, 0.96)) !important;
+}
+
+.dark .hover\:bg-gray-600:hover,
+.dark .dark\:hover\:bg-gray-600:hover,
+.dark .dark\:hover\:bg-gray-700:hover,
+.dark .dark\:hover\:bg-gray-700\/50:hover,
+.dark .hover\:bg-zinc-900:hover,
+.dark .dark\:hover\:bg-zinc-900:hover {
+  background: var(--panel-hover) !important;
+}
+
+.dark .border-gray-600,
+.dark .dark\:border-gray-600,
+.dark .dark\:border-gray-700,
+.dark .dark\:border-zinc-800,
+.dark .border-zinc-800 {
+  border-color: var(--line) !important;
+}
+
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark select,
+.dark textarea {
+  background: var(--field-bg) !important;
+  border-color: var(--line) !important;
+  color: #f4f4f5;
+}
+
+.dark input:not([type="checkbox"]):not([type="radio"]):hover,
+.dark select:hover,
+.dark textarea:hover {
+  background: var(--field-hover) !important;
+  border-color: var(--line-strong) !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #78716c;
+}
+
+.loader-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: end;
+  justify-content: center;
+  gap: 3px;
+  flex: 0 0 auto;
+  border: 1px solid;
+  overflow: hidden;
+}
+
+.loader-mark::before {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  background: conic-gradient(from 180deg, transparent 0deg, rgba(250, 204, 21, 0.65) 90deg, transparent 190deg);
+  animation: loader-orbit 1.4s linear infinite;
+}
+
+.loader-mark span {
+  position: relative;
+  width: 3px;
+  background: #facc15;
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.48);
+  animation: loader-bars 0.88s ease-in-out infinite;
+}
+
+.loader-mark span:nth-child(1) {
+  height: 35%;
+}
+
+.loader-mark span:nth-child(2) {
+  height: 68%;
+  animation-delay: 0.12s;
+}
+
+.loader-mark span:nth-child(3) {
+  height: 48%;
+  animation-delay: 0.24s;
+}
+
+.loader-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.loader-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.loader-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(250, 204, 21, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 204, 21, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.loader-line {
+  animation: loader-line 1.05s ease-in-out infinite;
+}
+
+.loader-tape {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 4px;
+  height: 34px;
+  align-items: end;
+}
+
+.loader-tape span {
+  display: block;
+  min-height: 8px;
+  background: linear-gradient(180deg, #facc15, rgba(250, 204, 21, 0.22));
+  animation: loader-tape 1s ease-in-out infinite;
+}
+
+.loader-tape span:nth-child(2n) {
+  animation-delay: 0.1s;
+}
+
+.loader-tape span:nth-child(3n) {
+  animation-delay: 0.2s;
+}
+
+@keyframes loader-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-bars {
+  0%, 100% {
+    transform: scaleY(0.55);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes loader-line {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes loader-tape {
+  0%, 100% {
+    height: 30%;
+    opacity: 0.45;
+  }
+  50% {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+.auth-hero-grid {
+  background-image:
+    linear-gradient(rgba(250, 204, 21, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 204, 21, 0.07) 1px, transparent 1px),
+    radial-gradient(circle at 70% 20%, rgba(250, 204, 21, 0.18), transparent 34%);
+  background-size: 42px 42px, 42px 42px, 100% 100%;
+}
+
+.auth-candle {
+  width: 10px;
+  border-radius: 0;
+  background: linear-gradient(180deg, rgba(250, 204, 21, 0.95), rgba(161, 98, 7, 0.76));
+  box-shadow: 0 0 28px rgba(250, 204, 21, 0.18);
+}
+
+.auth-candle::before,
+.auth-candle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: rgba(250, 204, 21, 0.45);
+}
+
+.auth-candle::before {
+  top: -28px;
+  height: 28px;
+}
+
+.auth-candle::after {
+  bottom: -30px;
+  height: 30px;
+}
+
+.ml-models-page {
+  --ml-surface: #12110e;
+  --ml-surface-soft: #17140f;
+  --ml-surface-strong: #0f0e0b;
+  --ml-border: rgba(250, 204, 21, 0.13);
+  --ml-border-strong: rgba(250, 204, 21, 0.32);
+}
+
+.ml-models-page .bg-white,
+.ml-models-page .dark\:bg-\[\#111111\],
+.ml-models-page .dark\:bg-zinc-900,
+.ml-models-page .dark\:bg-zinc-900\/70 {
+  background: var(--ml-surface) !important;
+}
+
+.ml-models-page .bg-gray-50,
+.ml-models-page .dark\:bg-\[\#070707\],
+.ml-models-page .dark\:bg-gray-800,
+.ml-models-page .dark\:bg-gray-900 {
+  background: var(--ml-surface-soft) !important;
+}
+
+.ml-models-page .border-gray-200,
+.ml-models-page .border-gray-300,
+.ml-models-page .dark\:border-zinc-800,
+.ml-models-page .dark\:border-gray-700,
+.ml-models-page .dark\:border-zinc-700 {
+  border-color: var(--ml-border) !important;
+}
+
+.ml-models-page .bg-blue-50,
+.ml-models-page .dark\:bg-yellow-400\/10 {
+  background: rgba(250, 204, 21, 0.08) !important;
+}
+
+.ml-models-page .border-blue-100,
+.ml-models-page .border-blue-200,
+.ml-models-page .border-blue-500,
+.ml-models-page .dark\:border-yellow-500\/20 {
+  border-color: var(--ml-border-strong) !important;
+}
+
+.ml-models-page .text-blue-600,
+.ml-models-page .text-blue-700,
+.ml-models-page .dark\:text-yellow-200,
+.ml-models-page .dark\:text-yellow-100 {
+  color: #facc15 !important;
+}
+
+.ml-models-page .hover\:bg-gray-100:hover,
+.ml-models-page .hover\:bg-gray-200:hover,
+.ml-models-page .dark\:hover\:bg-gray-600:hover,
+.ml-models-page .dark\:hover\:bg-gray-700:hover {
+  background: #211b10 !important;
+}
+
+/* ML-models: restore visible borders for cards, buttons and controls */
+.ml-models-page .border,
+.ml-models-page .border-t,
+.ml-models-page .border-r,
+.ml-models-page .border-b,
+.ml-models-page .border-l,
+.ml-models-page .border-dashed {
+  border-color: var(--ml-border) !important;
+}
+
+.ml-models-page [class*="border-yellow-"] {
+  border-color: var(--ml-border) !important;
+}
+
+.ml-models-page [class*="border-red-"] {
+  border-color: rgba(248, 113, 113, 0.35) !important;
+}
+
+.ml-models-page [class*="border-green-"] {
+  border-color: rgba(74, 222, 128, 0.35) !important;
+}
+
+.ml-models-page [class*="border-blue-"] {
+  border-color: var(--ml-border-strong) !important;
+}
+
+.ml-models-page [class*="hover:border-yellow-"]:hover,
+.ml-models-page input:hover,
+.ml-models-page select:hover,
+.ml-models-page textarea:hover,
+.ml-models-page button:hover {
+  border-color: var(--ml-border-strong) !important;
+}
+
+.ml-models-page input:focus,
+.ml-models-page select:focus,
+.ml-models-page textarea:focus,
+.ml-models-page button:focus {
+  border-color: #facc15 !important;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.10);
+}
+
+.ml-models-page .divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--ml-border) !important;
+}
+
+
+
+/* Общий визуальный контракт страниц: темные поверхности как в разделе ML-модели. */
+.dark .bg-white,
+.dark .dark\:bg-white {
+  background: var(--panel-bg) !important;
+}
+
+.dark .shadow-lg,
+.dark .shadow-xl,
+.dark .shadow-2xl,
+.dark .shadow-sm {
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22) !important;
+}
+
+.analytics-page {
+  --analytics-surface: #12110e;
+  --analytics-surface-soft: #17140f;
+  --analytics-border: rgba(250, 204, 21, 0.13);
+  --analytics-border-strong: rgba(250, 204, 21, 0.32);
+}
+
+.analytics-page .bg-white,
+.analytics-page .dark\:bg-\[\#111111\],
+.analytics-page .dark\:bg-zinc-900,
+.analytics-page .dark\:bg-zinc-900\/70,
+.analytics-page .dark\:bg-\[\#070707\] {
+  background: var(--analytics-surface) !important;
+}
+
+.analytics-page .bg-gray-50,
+.analytics-page .dark\:bg-gray-800,
+.analytics-page .dark\:bg-gray-900 {
+  background: var(--analytics-surface-soft) !important;
+}
+
+.analytics-page .border,
+.analytics-page .border-t,
+.analytics-page .border-r,
+.analytics-page .border-b,
+.analytics-page .border-l,
+.analytics-page .border-gray-100,
+.analytics-page .border-gray-200,
+.analytics-page .dark\:border-zinc-800,
+.analytics-page .dark\:border-gray-700 {
+  border-color: var(--analytics-border) !important;
+}
+
+.analytics-page [class*="border-yellow-"] {
+  border-color: var(--analytics-border-strong) !important;
+}
+
+.analytics-page .bg-blue-50,
+.analytics-page .dark\:bg-yellow-400\/10 {
+  background: rgba(250, 204, 21, 0.08) !important;
+}
+
+.analytics-page .text-blue-600,
+.analytics-page .text-blue-700,
+.analytics-page .dark\:text-yellow-200,
+.analytics-page .dark\:text-yellow-100 {
+  color: #facc15 !important;
+}
+
+.analytics-page button:hover,
+.analytics-page .hover\:bg-gray-50:hover,
+.analytics-page .hover\:bg-gray-100:hover,
+.analytics-page .dark\:hover\:bg-gray-700:hover,
+.analytics-page .dark\:hover\:bg-zinc-900:hover {
+  background: var(--panel-hover) !important;
+}
+
+.analytics-page button.bg-yellow-400:hover,
+.analytics-page .dark\:bg-yellow-400:hover {
+  background: #fde047 !important;
+}
+
+.analytics-page input:focus,
+.analytics-page select:focus,
+.analytics-page textarea:focus,
+.analytics-page button:focus {
+  border-color: #facc15 !important;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.10);
+}

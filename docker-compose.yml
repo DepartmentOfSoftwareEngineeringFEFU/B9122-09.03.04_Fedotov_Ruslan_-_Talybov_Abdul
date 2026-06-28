@@ -1,0 +1,72 @@
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: trading
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DB: trading
+      TINKOFF_API_KEY: ""
+      USE_SANDBOX: "true"
+      SECRET_KEY: dev-secret-key-change-me
+      TOKEN_ENCRYPTION_KEY: dev-token-encryption-key-change-me
+      AUTH_COOKIE_NAME: access_token
+      AUTH_COOKIE_SECURE: "false"
+      AUTH_COOKIE_HTTPONLY: "true"
+      AUTH_COOKIE_SAMESITE: lax
+      AUTH_COOKIE_MAX_AGE_SECONDS: 3600
+      LOGIN_RATE_LIMIT_ATTEMPTS: 5
+      LOGIN_RATE_LIMIT_WINDOW_SECONDS: 300
+      AUTO_SELL_WORKER_ENABLED: "false"
+      AUTO_SELL_MANUAL_PROCESS_ENABLED: "false"
+      AUTO_SELL_DRY_RUN: "false"
+      AUTO_SELL_POLL_SECONDS: 60
+      AI_BOT_REAL_TRADING_ENABLED: "false"
+      BULK_TRADE_WORKER_ENABLED: "true"
+      BULK_TRADE_WORKER_POLL_SECONDS: 60
+      BULK_TRADE_CSV_DIR: bulk_trade_exports
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./PROJECT-MONEY/registration-form
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE_URL: /api/
+        REACT_APP_DEBUG_API: "false"
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  db_data:
